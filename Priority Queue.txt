@@ -1,0 +1,121 @@
+#include <stdio.h>
+
+#define SIZE 5
+
+int value[SIZE];
+int priority[SIZE];
+int count = 0;
+
+// Insert an element
+void insert()
+{
+    if (count == SIZE)
+    {
+        printf("Queue is full.\n");
+        return;
+    }
+
+    printf("Enter value: ");
+    scanf("%d", &value[count]);
+
+    printf("Enter priority: ");
+    scanf("%d", &priority[count]);
+
+    count++;
+
+    printf("Element inserted.\n");
+}
+
+// Delete highest-priority element
+void deleteElement()
+{
+    int i;
+    int position = 0;
+
+    if (count == 0)
+    {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    // Find the smallest priority number
+    for (i = 1; i < count; i++)
+    {
+        if (priority[i] < priority[position])
+        {
+            position = i;
+        }
+    }
+
+    printf("%d deleted.\n", value[position]);
+
+    // Shift remaining elements left
+    for (i = position; i < count - 1; i++)
+    {
+        value[i] = value[i + 1];
+        priority[i] = priority[i + 1];
+    }
+
+    count--;
+}
+
+// Display all elements
+void display()
+{
+    int i;
+
+    if (count == 0)
+    {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    printf("\nValue\tPriority\n");
+
+    for (i = 0; i < count; i++)
+    {
+        printf("%d\t%d\n", value[i], priority[i]);
+    }
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\n1. Insert");
+        printf("\n2. Delete");
+        printf("\n3. Display");
+        printf("\n4. Exit");
+
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                insert();
+                break;
+
+            case 2:
+                deleteElement();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                printf("Program ended.\n");
+                break;
+
+            default:
+                printf("Invalid choice.\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+

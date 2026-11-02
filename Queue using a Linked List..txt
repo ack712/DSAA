@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure of one linked-list node
+struct Node
+{
+    int data;          // Stores the value
+    struct Node *next; // Stores address of the next node
+};
+
+struct Node *front = NULL; // Points to the first node
+struct Node *rear = NULL;  // Points to the last node
+
+// Function to insert a new node at the rear
+void enqueue()
+{
+    int value;
+
+    // Create memory for a new node
+    struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    // Check whether memory was allocated
+    if (newNode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    printf("Enter value to insert: ");
+    scanf("%d", &value);
+
+    newNode->data = value;
+    newNode->next = NULL; // New node is the last node
+
+    // If the queue is empty
+    if (rear == NULL)
+    {
+        front = newNode;
+        rear = newNode;
+    }
+    else
+    {
+        rear->next = newNode; // Link old rear to new node
+        rear = newNode;       // New node becomes the rear
+    }
+
+    printf("%d inserted into the queue\n", value);
+}
+
+// Function to remove the front node
+void dequeue()
+{
+    struct Node *temp;
+
+    // Check whether the queue is empty
+    if (front == NULL)
+    {
+        printf("Queue Underflow\n");
+        return;
+    }
+
+    temp = front; // Store current front node temporarily
+
+    printf("%d removed from the queue\n", front->data);
+
+    front = front->next; // Move front to the next node
+
+    // If the last node was removed
+    if (front == NULL)
+    {
+        rear = NULL;
+    }
+
+    free(temp); // Release memory of the removed node
+}
+
+// Function to display queue elements
+void display()
+{
+    struct Node *temp;
+
+    if (front == NULL)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
+
+    temp = front;
+
+    printf("Queue elements are:\n");
+
+    // Move from front node to rear node
+    while (temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\n--- Queue Using Linked List ---\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                enqueue();
+                break;
+
+            case 2:
+                dequeue();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                printf("Program ended\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+

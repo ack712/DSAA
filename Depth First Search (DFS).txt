@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+// This graph has 4 vertices: 0, 1, 2 and 3
+// graph[i][j] = 1 means an edge exists between i and j
+int graph[4][4] = {
+    {0, 1, 1, 0},   // Vertex 0 is connected to 1 and 2
+    {1, 0, 0, 1},   // Vertex 1 is connected to 0 and 3
+    {1, 0, 0, 1},   // Vertex 2 is connected to 0 and 3
+    {0, 1, 1, 0}    // Vertex 3 is connected to 1 and 2
+};
+
+// visited array tells us which vertices are already visited
+// 0 = not visited
+// 1 = visited
+int visited[4] = {0};
+
+
+// DFS function receives the vertex that must be visited
+void DFS(int vertex)
+{
+    // Print the current vertex
+    printf("%d ", vertex);
+
+    // Mark the current vertex as visited so that we do not visit it again
+    visited[vertex] = 1;
+
+    // Check all possible connected vertices
+    for (int i = 0; i < 4; i++)
+    {
+        // First condition:
+        // graph[vertex][i] == 1 checks whether an edge exists
+        // Second condition:
+        // visited[i] == 0 checks whether vertex i is not visited
+
+        if (graph[vertex][i] == 1 && visited[i] == 0)
+        {
+            // Recursively visit the connected vertex
+            // DFS keeps going deeper until no unvisited
+            // connected vertex remains
+            DFS(i);
+        }
+    }
+}
+
+int main()
+{
+    printf("DFS Traversal: ");
+
+    // Start DFS traversal from vertex 0
+    DFS(0);
+    return 0;
+}
+

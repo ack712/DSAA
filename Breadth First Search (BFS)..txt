@@ -1,0 +1,77 @@
+#include <stdio.h>
+
+// This graph has 4 vertices: 0, 1, 2 and 3
+// graph[i][j] = 1 means there is an edge between i and j
+// graph[i][j] = 0 means there is no edge
+
+int graph[4][4] = {
+    {0, 1, 1, 0},   // Vertex 0 is connected to 1 and 2
+    {1, 0, 0, 1},   // Vertex 1 is connected to 0 and 3
+    {1, 0, 0, 1},   // Vertex 2 is connected to 0 and 3
+    {0, 1, 1, 0}    // Vertex 3 is connected to 1 and 2
+};
+
+// visited[i] = 1 means vertex i is already visited
+// Initially all vertices are unvisited, so values are 0
+int visited[4] = {0};
+
+int main()
+{
+    // Queue is used in BFS
+    // It stores vertices that are waiting to be visited
+    int queue[4];
+
+    // front points to the vertex to be removed from queue
+    // rear points to the next empty position in queue
+    int front = 0, rear = 0;
+
+    // We will start BFS from vertex 0
+    int start = 0;
+
+    // Put starting vertex 0 into the queue
+    queue[rear] = start;
+
+    // Move rear to the next position
+    rear++;
+
+    // Mark vertex 0 as visited
+    // This prevents us from adding it again later
+    visited[start] = 1;
+
+    printf("BFS Traversal: ");
+
+    // Continue until the queue becomes empty
+    while (front < rear)
+    {
+        // Take the first vertex from the queue
+        int vertex = queue[front];
+
+        // Move front to the next queue position
+        front++;
+
+        // Print the current vertex
+        printf("%d ", vertex);
+
+        // Check all possible vertices 0, 1, 2 and 3
+        for (int i = 0; i < 4; i++)
+        {
+            // graph[vertex][i] == 1 means an edge exists
+            // visited[i] == 0 means that vertex is not visited yet
+            if (graph[vertex][i] == 1 && visited[i] == 0)
+            {
+                // Add the connected vertex into the queue
+                queue[rear] = i;
+
+                // Move rear to the next empty position
+                rear++;
+
+                // Mark the vertex as visited immediately
+                // so it is not added to the queue again
+                visited[i] = 1;
+            }
+        }
+    }
+
+    return 0;
+}
+

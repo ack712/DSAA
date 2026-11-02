@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure of one node
+struct Node
+{
+    int data;           // Stores the value
+    struct Node *next;  // Stores address of next node
+};
+
+struct Node *head = NULL;
+
+// Insert a new node at the end
+void insert()
+{
+    int value;
+
+    printf("Enter value: ");
+    scanf("%d", &value);
+
+    // Create a new node
+         struct Node *newNode =
+        (struct Node *)malloc(sizeof(struct Node));
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    // If list is empty
+    if (head == NULL)
+    {
+        head = newNode;
+    }
+    else
+    {
+        struct Node *temp = head;
+
+        // Move to the last node
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
+    }
+
+    printf("Node inserted.\n");
+}
+
+// Display all nodes
+void display()
+{
+    struct Node *temp = head;
+
+    if (head == NULL)
+    {
+        printf("List is empty.\n");
+        return;
+    }
+
+    printf("Singly Linked List: ");
+
+    while (temp != NULL)
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("NULL\n");
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\n1. Insert");
+        printf("\n2. Display");
+        printf("\n3. Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                insert();
+                break;
+
+            case 2:
+                display();
+                break;
+
+            case 3:
+                printf("Program ended.\n");
+                break;
+
+            default:
+                printf("Invalid choice.\n");
+        }
+
+    } while (choice != 3);
+
+    return 0;
+}
